@@ -1,119 +1,126 @@
-// 1+2*5
-sum(1,mul(2,5))
-
-
-1, +, 4, *, 2, +, *, 2
-
-1, new Plus(+), 4, Mul(*), 2
-
-// first loop (priority 2)
-1, new Plus(+), 8
-// second loop (priority 1)
-9
-
 class Operator {
 	constructor() {
-		this.priority = 1;
+		this.priority = 1
 	}
 
 	calc(one, two) {
-		if (!validate(one, two))
-			return new Error("one, this, two");
+		if (!this.validate(one, two))
+			return new Error("one, this, two")
 
-		return 0;
+		return 0
 	}
 
 	validate(one, two) {
-		if (one instanceof Opertator || )
-			return false;
+		if (one instanceof Operator || two instanceof Operator)
+			return false
 
-		return true;
+		return true
 	}
 }
 
 class Plus extends Operator {
-	calc(one, two) {
-		super.calc(one, two);
+  constructor() {
+    super()
+  }
 
-		return one + two;
+	calc(one, two) {
+		super.calc(one, two)
+
+		return one + two
 	}
 }
 
-class Mul;
-// this.priority = 2;
+class Minus extends Operator {
+  constructor() {
+    super()
+  }
 
-MAX_PRIORITY = 2;
+  calc(one, two) {
+    super.calc(one, two)
+
+    return one - two
+  }
+}
+
+class Multiplay extends Operator {
+  constructor() {
+    super()
+    this.priority = 2
+  }
+
+  calc(one, two) {
+    super.calc(one, two)
+
+    return one * two
+  }
+}
+
+class Divide extends Operator {
+  constructor() {
+    super()
+    this.priority = 2
+  }
+
+  calc(one, two) {
+    super.calc(one, two)
+
+    return one / two
+  }
+}
 
 class Calc {
 	constructor(stack) {
-		this.stack = [];
-
-		for (var x of stack) {
-			var value = x;
-
-			switch (x) {
-				case '+':
-					value = new Plus(x);
-					break;				
-			}
-
-			this.stack.push(value);
-		}
+    this.MAX_PRIORITY = 2
+		this.stack = []
+    this.prepareStack(stack)
 	}
+
+  prepareStack(stack) {
+    for (var x of stack) {
+      var value = parseFloat(x)
+
+      switch (x) {
+        case '+':
+          value = new Plus()
+          break
+        case '-':
+          value = new Minus()
+          break
+        case '*':
+          value = new Multiplay()
+          break
+        case '/':
+          value = new Divide()
+      }
+
+      this.stack.push(value)
+    }
+  }
 
 	calc() {
-		var foo = ;
-		var result = null
+    var stack = this.stack.slice()
+    var i = this.MAX_PRIORITY
 
-		while {
+    while (i >= 1) {
+      stack = this.calcStack(stack, 0, i)
+      i--
+    }
 
-		}
-		for (var i = MAX_PRIORITY, --) {
-			var operator_num = 0;
-
-			for (var j = 0; j < this.stack.length) {
-				if (this.stack[j] instanceof Opertator && this.stack[j].priotiry == i) {
-					results[opertaor_num] = this.stack[j].calc( , );			\
-					operator_num++;
-				}
-			}	
-		}
-
-
+    return stack
 	}
-}
 
-null, 
+  calcStack(stack, i, priority) {
+    if (i === stack.length)
+      return stack
 
-
-class Calculate {
-  calc(items) {
-    return eval(items.join(''))
+    if (stack[i] instanceof Operator && stack[i].priority === priority) {
+      console.log(stack[i].calc(stack[i-1], stack[i+1]))
+      stack.splice(i-1, 3, stack[i].calc(stack[i-1], stack[i+1]))
+      return this.calcStack(stack, i-1, priority)
+    } else {
+      return this.calcStack(stack, i+1, priority)
+    }
   }
-}
-
-class Numbers {
-  concatNumbers(num1,	 num2) {
-    return parseFloat(num1.toString() + num2.toString())
-  }
-}
-
-class Point {
-  concatPoint(num) {
-    return num.toString() + '.'
-  }
-}
-
-class Operator {
-	calc() {
-
-	}
-}
-
-class Sum extends Operator{
-	calc(num1, num2) {
-		return num1+num2
-	}
 }
 
 class CalculatorController {
@@ -121,71 +128,52 @@ class CalculatorController {
    * @param {Storage} storage
    */
   constructor(storage) {
-    "ngInject";
-    this.storage = storage
+    "ngInject"
+
+    this.s = storage
 
     this.clearAll()
     
     // move this to numbers directive
     this.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    
     // move this to operators directive
     this.operators =  {'+': '+', '-': '-', '×': '*', '÷': '/'}
-
-    this.c = new Calculate()
-    this.n = new Numbers()
-    this.p = new Point()
   }
 
-  // add the number to array [1,2,3...]
   addNumber(number) {
-    if (this.calculated) {
-      this.clearTempNumber()
-      this.calculated = false
-    }
-    this.tempNumber = this.n.concatNumbers(this.tempNumber, number)
-    this.operatorAdded = false
+    this.number.push(number)
   }
 
   addPoint() {
-    if (this.pointAdded) return
-    this.tempNumber = this.p.concatPoint(this.tempNumber)
-    this.pointAdded = true
+    return
   }
 
-  // push the number array.join ->stack, push operator to stack
   addOperator(operator) {
-    if (this.operatorAdded) return
-    this.storage.addItem(this.tempNumber)
-    this.storage.addItem(operator.toString())
-    this.clearTempNumber()
-    this.operatorAdded = true
-    this.pointAdded = false
+    this.s.addItem(this.prepareNumber())
+    this.resetNumber()
+    this.s.addItem(operator)
   }
 
   // Calculate the expression.
-  // this.c = new Calc()
-  // this.c.calc(stack)
   calculate() {
-    this.storage.addItem(this.tempNumber)
-    this.tempNumber = this.c.calc(this.storage.getItems())
-    this.calculated = true
-    this.operatorAdded = false
-    this.pointAdded = false
-    this.storage.clearItems()
+    this.s.addItem(this.prepareNumber())
+    this.c = new Calc(this.s.getItems())
+    this.clearAll()
+    this.number = this.c.calc()
+  }
+
+  prepareNumber() {
+    return this.number.join('')
   }
 
   // Reset calculator.
   clearAll() {
-    this.storage.clearItems()
-    this.clearTempNumber()
-    this.calculated = false
-    this.operatorAdded = false
-    this.pointAdded = false
+    this.s.clearItems()
+    this.resetNumber()
   }
 
-  clearTempNumber() {
-    this.tempNumber = '0'
+  resetNumber() {
+    this.number = []
   }
 }
 

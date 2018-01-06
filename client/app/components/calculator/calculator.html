@@ -1,6 +1,6 @@
 <div class="calculator">
 	<form novalidate>
-		<input type="text" ng-disabled="true" value="{{ $ctrl.tempNumber | number }}"/>
+		<input type="text" ng-disabled="true" value="{{ $ctrl.number.join('') | number }}"/>
 
 		<numbers ng-repeat="number in $ctrl.numbers"
 						 add-number="$ctrl.addNumber(number)"
