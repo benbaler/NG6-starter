@@ -2,6 +2,7 @@ import CalculatorModule from './calculator';
 import CalculatorController from './calculator.controller';
 import CalculatorComponent from './calculator.component';
 import CalculatorTemplate from './calculator.html';
+import Calc from './calc';
 
 describe('Calculator', () => {
   let $rootScope, makeController;
@@ -18,22 +19,6 @@ describe('Calculator', () => {
     // top-level specs: i.e., routes, injection, naming
   });
 
-  describe('Controller', () => {
-    // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
-    });
-  });
-
-  describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(CalculatorTemplate).to.match(/{{\s?\$ctrl\.name\s?}}/g);
-    });
-  });
-
   describe('Component', () => {
     // component/directive specs
     let component = CalculatorComponent;
@@ -47,11 +32,30 @@ describe('Calculator', () => {
     });
   });
 
-  // to do same for *,/,-...
-  describre('Calc', () => {
+  describe('Calc', () => {
     it('check if 1+2=3', () => {
-      var calc = new Calc([1, '+', 2])
-      expect(calc.calc()).to.equal(3)
+      var c = new Calc([1, '+', 2])
+      expect(c.calc()).to.have.all.members([3])
+    })
+
+    it('check if 1-2=-1', () => {
+      var c = new Calc([1, '-', 2])
+      expect(c.calc()).to.have.all.members([-1])
+    })
+
+    it('check if 1*2=2', () => {
+      var c = new Calc([1, '*', 2])
+      expect(c.calc()).to.have.all.members([2])
+    })
+
+    it('check if 1/2=0.5', () => {
+      var c = new Calc([1, '/', 2])
+      expect(c.calc()).to.have.all.members([0.5])
+    })
+
+    it('check if 1+2*3=7', () => {
+      var c = new Calc([1, '+', 2, '*', 3])
+      expect(c.calc()).to.have.all.members([7])
     })
   });
 });
