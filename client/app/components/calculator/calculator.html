@@ -1,22 +1,18 @@
-<form novalidate>
-	<input type="number" ng-model="$ctrl.exp">
+<div class="calculator">
+	<form novalidate>
+		<input type="text" ng-disabled="true" value="{{ $ctrl.tempNumber | number }}"/>
 
-	<button ng-click="$ctrl.num(0)">0</button>
-	<button ng-click="$ctrl.num(1)">1</button>
-	<button ng-click="$ctrl.num(2)">2</button>
-	<button ng-click="$ctrl.num(3)">3</button>
-	<button ng-click="$ctrl.num(4)">4</button>
-	<button ng-click="$ctrl.num(5)">5</button>
-	<button ng-click="$ctrl.num(6)">6</button>
-	<button ng-click="$ctrl.num(7)">7</button>
-	<button ng-click="$ctrl.num(8)">8</button>
-	<button ng-click="$ctrl.num(9)">9</button>
+		<numbers ng-repeat="number in $ctrl.numbers"
+						 add-number="$ctrl.addNumber(number)"
+						 number="number"></numbers>
 
-	<button ng-click="$ctrl.act('+')">+</button>
-	<button ng-click="$ctrl.act('-')">-</button>
-	<button ng-click="$ctrl.act('*')">×</button>
-	<button ng-click="$ctrl.act('/')">÷</button>
-	<button ng-click="$ctrl.equal()">=</button>
+		<operators ng-repeat="(key, value) in $ctrl.operators"
+							 add-operator="$ctrl.addOperator(value)" 
+							 operator="key"></operators>
 
-	<button ng-click="$ctrl.clear()">AC</button>
-</form>
+		<button ng-click="$ctrl.addPoint()">.</button>
+
+		<button ng-click="$ctrl.clearAll()">AC</button>
+		<button ng-click="$ctrl.calculate()">=</button>
+	</form>
+</div>
