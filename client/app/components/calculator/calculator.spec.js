@@ -46,4 +46,12 @@ describe('Calculator', () => {
       expect(component.controller).to.equal(CalculatorController);
     });
   });
+
+  // to do same for *,/,-...
+  describre('Calc', () => {
+    it('check if 1+2=3', () => {
+      var calc = new Calc([1, '+', 2])
+      expect(calc.calc()).to.equal(3)
+    })
+  });
 });
