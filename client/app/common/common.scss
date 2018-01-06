@@ -1,2 +1,23 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+$cWidth: 400px;
+$cBackground: #EEEDEB;
+$cRadius: 5px;
+$cPadding: 10px;
+$cFontSize: xx-large;
+
+$dBackground: #343434;
+$dColor: white;
+$dHeight: 88px;
+
+$nHeight: 88px;
+$nWidth: 88px;
+$nPadding: 5px;
+
 body {
+   height: 100%;
+   // browsers default to 16px for font-size,
+   // so setting top-level font-size to 62.5%
+   // scales 1rem to equal 10px.
+   font: 62.5% 'Roboto', sans-serif;
 }

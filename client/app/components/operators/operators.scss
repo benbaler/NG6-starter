@@ -1,8 +1,10 @@
+@import '../../common/common';
+
 .operators {
-  height: 80px;
-  width: 80px;
-  font-size: xx-large;
-  background: #F0F0F0;
-  color: #717171;
-  margin: 5px;
+  height: $nHeight;
+  width: $nWidth;
+  font-size: $cFontSize;
+  background: $cBackground;
+  color: $dBackground;
+  margin: $nPadding;
 }
