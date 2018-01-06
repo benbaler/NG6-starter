@@ -4,7 +4,9 @@
   height: $nHeight;
   width: $nWidth;
   font-size: $cFontSize;
-  background: $cBackground;
+  background: $nBackground;
   color: $dBackground;
   margin: $nPadding;
+  border-radius: $cRadius;
+  box-shadow: $boxShadow;
 }
